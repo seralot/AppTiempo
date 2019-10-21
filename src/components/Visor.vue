@@ -1,14 +1,18 @@
 <template>
   <div v-if="ciudad" >
     <div>
-        <!-- Nombre Ciudad-->
-        <p> {{ ciudad.nombre }}</p>
-        <!-- Temperatura-->
-        <h1 class="display-1">{{ tempEntero }}º</h1>
-        <!-- Cielo (Soleado, Nublado, etc.)-->
-        <img :src="`http://openweathermap.org/img/wn/${ ciudad.icon }.png`" alt="Estado" class="icono mb-1">
-        <!--<img :src="require(`@/assets/${ciudad.estado}.png`)" alt="Estado" class="icono mb-1">-->
-        <p><small> {{ ciudad.estado | capitalize}} </small></p> 
+      <b-card
+        class="text-left"
+        :title="`${ciudad.nombre}`"
+        :sub-title="`${this.hora}`">
+      <b-card-text>
+        <p>{{ciudad.estado | capitalize}}</p>
+        <div class="d-flex justify-content-center">
+          <img :src="`http://openweathermap.org/img/wn/${ ciudad.icon }.png`" alt="Estado" class="icono mb-1 mr-2 col-4">
+          <h1 class="display-1">{{ tempEntero }}º</h1>
+        </div>
+      </b-card-text>
+      </b-card>
      </div>
   </div>
   <div v-else>
@@ -18,6 +22,14 @@
 
 <script>
 export default {
+    data () {
+      return {
+        fecha: null
+      }
+    },
+    mounted () {
+      this.fecha = new Date();
+    },
     props: {
         ciudad: Object
     },
@@ -26,6 +38,13 @@ export default {
       // La variable tempEntero devuelve la temperatura de la ciudad sin decimales
       tempEntero: function() {
         return parseInt(this.ciudad.temp);
+      },
+      hora: function(){
+        if(this.fecha){
+        return this.fecha.getHours()+":"+this.fecha.getMinutes();
+        }else{
+          return "";
+        }
       }
     },
     // Filtro para poner en mayusculas un string
