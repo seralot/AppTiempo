@@ -39,7 +39,7 @@ export default {
     },
     throttledMethod: _.debounce(function() {
       this.changeUrl();
-    }, 2000),
+    }, 1000),
     search: function(ubicacion) {
       this.buscando = true
       axios
