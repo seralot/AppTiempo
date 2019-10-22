@@ -13,6 +13,7 @@ import Visor from '@/components/Visor.vue';
 
 Vue.use(BootstrapVue);
 
+Vue.config.app = process.env;
 Vue.config.productionTip = false;
 
 Vue.component('buscador', Buscador)

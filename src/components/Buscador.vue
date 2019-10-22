@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import {API_KEY, URL} from '../services/services';
 import axios from 'axios';
 import _ from 'lodash';
 export default {
@@ -43,7 +44,8 @@ export default {
     search: function(ubicacion) {
       this.buscando = true
       axios
-     .get(`https://api.openweathermap.org/data/2.5/weather?q=${ ubicacion },es&appid=375b5b72defecfdfccfa090d50f49db4&lang=es&units=metric`)
+     .get(URL+ubicacion+
+     '&units=metric&lang=es&APPID='+API_KEY)
      .then(response => {
        this.ciudades = response.data;
        this.ciudadEncontrada.nombre = this.ciudades.name;
