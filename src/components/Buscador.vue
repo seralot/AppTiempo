@@ -3,7 +3,6 @@
     <b-form-group id="input-group-1" label="Ubicación: " label-for="input-1">
       <div class="d-flex justify-content-center">
         <b-form-input @input="throttledMethod()" @keyup.enter="changeUrl()" v-model="param"  id="input-1" required placeholder="Ubicación"></b-form-input>
-        <b-button type="submit" class="ml-2">Mostrar</b-button>
       </div>
     </b-form-group>
     <p v-if="buscando">Buscando...</p>
@@ -24,7 +23,8 @@ export default {
          nombre: null,
          temp: null,
          estado: null,
-         icon: null}
+         icon: null,
+         fecha: null}
     }
   },
   mounted (){
@@ -50,6 +50,7 @@ export default {
        this.ciudadEncontrada.temp = this.ciudades.main.temp;
        this.ciudadEncontrada.estado = this.ciudades.weather[0].description;
        this.ciudadEncontrada.icon = this.ciudades.weather[0].icon;
+       this.ciudadEncontrada.fecha = this.ciudades.dt;
      }).catch(()=> {
        this.ciudadEncontrada = {
          nombre: null,
@@ -68,7 +69,6 @@ export default {
   },
    watch: {
     $route(to, from) {
-
       if(this.$route.query.ubicacion){
         this.search(this.$route.query.ubicacion)
       }

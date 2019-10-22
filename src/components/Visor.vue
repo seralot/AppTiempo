@@ -1,19 +1,20 @@
 <template>
   <div v-if="ciudad" >
-    <div>
-      <b-card
-        class="text-left"
-        :title="`${ciudad.nombre}`"
-        :sub-title="`${this.hora}`">
-      <b-card-text>
-        <p>{{ciudad.estado | capitalize}}</p>
-        <div class="d-flex justify-content-center">
-          <img :src="`http://openweathermap.org/img/wn/${ ciudad.icon }.png`" alt="Estado" class="icono mb-1 mr-2 col-4">
-          <h1 class="display-1">{{ tempEntero }}º</h1>
-        </div>
-      </b-card-text>
-      </b-card>
-     </div>
+    <b-card no-body class="overflow-hidden" border-variant="secondary">
+      <b-row no-gutters>
+        <b-col md="7">
+          <b-card-body :title="`${ciudad.nombre}`" :sub-title="`${hora}`">
+            <b-card-text>
+              <span>{{ciudad.estado | capitalize}}</span>
+              <img :src="`http://openweathermap.org/img/wn/${ ciudad.icon }.png`" alt="Estado" >
+            </b-card-text>
+          </b-card-body>
+        </b-col>
+          <b-col md="5">
+            <h1 class="display-1 mt-3">{{ tempEntero }}º</h1>
+        </b-col>
+      </b-row>
+    </b-card>
   </div>
   <div v-else>
      <p class="bg-danger text-white font-weight-bold rounded">No se encontró la ubicación</p> 
@@ -27,9 +28,6 @@ export default {
         fecha: null
       }
     },
-    mounted () {
-      this.fecha = new Date();
-    },
     props: {
         ciudad: Object
     },
@@ -40,8 +38,9 @@ export default {
         return parseInt(this.ciudad.temp);
       },
       hora: function(){
-        if(this.fecha){
-        return this.fecha.getHours()+":"+this.fecha.getMinutes();
+        if(this.ciudad.fecha){
+          let fecha = new Date(this.ciudad.fecha*1000);
+          return fecha.getHours()+":"+fecha.getMinutes();
         }else{
           return "";
         }
@@ -57,5 +56,5 @@ export default {
 </script>
 
 <style>
-
+ 
 </style>
