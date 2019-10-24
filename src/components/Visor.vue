@@ -1,5 +1,5 @@
 <template>
-  <div v-if="datosCiudad" >
+  <div v-if="datosCiudad" class="col-6 mx-auto">
     <b-card  no-body class="overflow-hidden" border-variant="secondary">
       <b-row no-gutters>
         <b-col md="7">

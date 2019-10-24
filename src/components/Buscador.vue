@@ -1,6 +1,6 @@
 <template>
   <b-form @submit.stop.prevent="changeUrl()">
-    <b-form-group id="input-group-1" label="Ubicación: " label-for="input-1">
+    <b-form-group class="col-6 mx-auto" id="input-group-1" label="Ubicación: " label-for="input-1">
       <div class="d-flex justify-content-center">
         <b-form-input @input="throttledMethod()" @keyup.enter="changeUrl()" v-model="param"  id="input-1" required placeholder="Ubicación"></b-form-input>
       </div>
@@ -66,6 +66,10 @@ export default {
           return {
             nombre: this.ciudades.city.name,
             temp: item.main.temp,
+            temp_max: item.main.temp_max,
+            temp_min: item.main.temp_min,
+            humedad: item.main.humidity,
+            viento: item.wind.speed,
             estado: item.weather[0].description,
             icon: item.weather[0].icon,
             fecha: item.dt_txt
