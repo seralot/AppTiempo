@@ -1,8 +1,10 @@
 <template>
   <div id="details" class="text-center">
-    <buscador @change="cargaCiudad"></buscador>
+    <buscador @change="cargaDatos"></buscador>
     <div v-if="iniciado" >
-      <visor :ciudad="ciudadActual"></visor>
+      <visor :datosCiudad="datosActuales"></visor>
+      <button class="mt-2 btn btn-lg btn-outline-dark" @click="ocultar()">Mostrar más</button>
+      <tabla v-show="oculto" :datosCiudad="datosActuales"></tabla>
     </div>
   </div>
 </template>
@@ -11,14 +13,18 @@
  export default{
     data () {
       return {
-        ciudadActual: null,
+        oculto: false,
+        datosActuales: null,
         iniciado: false
       }
     },
     methods: {
-      cargaCiudad (ciudadEncontrada) {
+      cargaDatos (detallesBuscador) {
         this.iniciado = true
-        this.ciudadActual = ciudadEncontrada
+        this.datosActuales = detallesBuscador
+      },
+      ocultar (){
+        this.oculto = !this.oculto;
       }
     }
 }

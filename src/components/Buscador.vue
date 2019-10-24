@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {API_KEY, URL} from '../services/services';
+import {API_KEY, URL} from '@/services/services';
 import axios from 'axios';
 import _ from 'lodash';
 export default {
@@ -20,12 +20,7 @@ export default {
       param: null,
       ciudades: null,
       buscando: false,
-      ciudadEncontrada: {
-         nombre: null,
-         temp: null,
-         estado: null,
-         icon: null,
-         fecha: null}
+      detalles: []
     }
   },
   mounted (){
@@ -41,19 +36,57 @@ export default {
     throttledMethod: _.debounce(function() {
       this.changeUrl();
     }, 1000),
+    crearObjeto(nombre, temp, estado, icon, fecha, hora) {
+      const ciudad = {
+         nombre: nombre,
+         temp: temp,
+         estado: estado,
+         icon: icon,
+         fecha: fecha,
+         hora: hora,
+      };
+
+      this.detalles.push(ciudad);
+      console.log(">>>>>", ciudad)
+    },
+    borrarArray(array){
+      if(array.length!=0){
+        array.splice(0, array.length);
+      }
+    },
     search: function(ubicacion) {
       this.buscando = true
       axios
      .get(URL+ubicacion+
      '&units=metric&lang=es&APPID='+API_KEY)
      .then(response => {
-       this.ciudades = response.data;
-       this.ciudadEncontrada.nombre = this.ciudades.name;
-       this.ciudadEncontrada.temp = this.ciudades.main.temp;
-       this.ciudadEncontrada.estado = this.ciudades.weather[0].description;
-       this.ciudadEncontrada.icon = this.ciudades.weather[0].icon;
-       this.ciudadEncontrada.fecha = this.ciudades.dt;
-     }).catch(()=> {
+        this.ciudades = response.data;
+        console.log(response)
+
+        this.detalles = this.ciudades.list.map((item) => {
+          return {
+            nombre: this.ciudades.city.name,
+            temp: item.main.temp,
+            estado: item.weather[0].description,
+            icon: item.weather[0].icon,
+            fecha: item.dt_txt
+          }
+        });
+
+        // console.log(data);
+
+        // const data = {
+        //   nombre: this.ciudades.city.name,
+        //   temp: this.ciudades.list[0].main.temp,
+        //   estado: this.ciudades.list[0].weather[0].description,
+        //   icon: this.ciudades.list[0].weather[0].icon,
+        //   fecha: this.ciudades.list[0].dt_txt
+        // }
+        console.log("dfsdfsd")
+
+        // this.detalles.push(data)
+        console.log(this.detalles)
+      }).catch(()=> {
        this.ciudadEncontrada = {
          nombre: null,
          temp: null,
@@ -61,8 +94,8 @@ export default {
          icon: null}
      }).finally(() => {
         this.buscando = false
-        if (this.ciudadEncontrada.nombre) {
-          this.$emit('change', this.ciudadEncontrada)
+        if (this.detalles.length!=0) {
+          this.$emit('change', this.detalles)
         } else {
           this.$emit('change', null)
         }

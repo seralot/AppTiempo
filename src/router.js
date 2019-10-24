@@ -5,6 +5,7 @@ import Router from "vue-router";
 import Details from "@/views/detalles";
 import Sobremi from "@/views/Sobremi";
 import Error from "@/views/Error404";
+import DatosTabla from '@/views/DatosTabla';
 
 Vue.use(Router)
 
@@ -19,6 +20,10 @@ export default new Router({
         path: "/sobremi",
         name: 'sobremi',
         component: Sobremi
+    }, {
+        path: "/datos",
+        name: 'datos',
+        component: DatosTabla
     }, {
         path: "*",
         name: '404',
