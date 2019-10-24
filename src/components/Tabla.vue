@@ -1,5 +1,6 @@
 <template>
-    <table class="table mt-4">
+<div class="table-responsive">
+    <table class="table col-12 mt-4">
         <tr>
             <th>Fecha</th>
             <th>Hora</th>
@@ -20,6 +21,7 @@
             <td><img :src="`http://openweathermap.org/img/wn/${ data.icon }.png`" alt="Estado" ></td>
         </tr>
     </table>
+</div>
 </template>
 
 <script>
