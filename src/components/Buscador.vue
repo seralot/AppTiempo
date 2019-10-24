@@ -62,7 +62,6 @@ export default {
      .then(response => {
         this.ciudades = response.data;
         console.log(response)
-
         this.detalles = this.ciudades.list.map((item) => {
           return {
             nombre: this.ciudades.city.name,
