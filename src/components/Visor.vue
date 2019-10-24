@@ -1,17 +1,17 @@
 <template>
   <div v-if="datosCiudad" >
-    <b-card v-for="(ciudad, indice) in datosCiudad" :key="indice" no-body class="overflow-hidden" border-variant="secondary">
+    <b-card  no-body class="overflow-hidden" border-variant="secondary">
       <b-row no-gutters>
         <b-col md="7">
-          <b-card-body :title="`${ciudad.nombre}`" :sub-title="ciudad.fecha">
+          <b-card-body :title="`${hoy.nombre}`" :sub-title="hoy.fecha | fecha">
             <b-card-text>
-              <span>{{ciudad.estado | capitalize}}</span>
-              <img :src="`http://openweathermap.org/img/wn/${ ciudad.icon }.png`" alt="Estado" >
+              <span>{{hoy.estado | capitalize}}</span>
+              <img :src="`http://openweathermap.org/img/wn/${ hoy.icon }.png`" alt="Estado" >
             </b-card-text>
           </b-card-body>
         </b-col>
           <b-col md="5">
-            <h1 class="display-1 mt-3">{{ ciudad.temp | tempEntero }}º</h1>
+            <h1 class="display-1 mt-3">{{ hoy.temp | tempEntero }}º</h1>
         </b-col>
       </b-row>
     </b-card>
@@ -26,7 +26,8 @@
 export default {
     data () {
       return {
-        fecha: null
+        fecha: null,
+        hoy: this.datosCiudad[0]
       }
     },
     props: {
@@ -51,9 +52,8 @@ export default {
       tempEntero: function(value){
         return parseInt(value);
       },
-      hora: function(value){
-        let fecha = new Date(value*1000);
-        return fecha.getHours()+":"+fecha.getMinutes();
+      fecha: function(value){
+        return value.slice(0,10);
       }
     }
 }
