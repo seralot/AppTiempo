@@ -3,15 +3,15 @@
     <b-card  no-body class="overflow-hidden" border-variant="secondary">
       <b-row no-gutters>
         <b-col md="7">
-          <b-card-body :title="`${hoy.nombre}`" :sub-title="hoy.fecha | fecha">
+          <b-card-body :title="`${this.datosCiudad[0].nombre}`" :sub-title="this.datosCiudad[0].fecha | fecha">
             <b-card-text>
-              <span>{{hoy.estado | capitalize}}</span>
-              <img :src="`http://openweathermap.org/img/wn/${ hoy.icon }.png`" alt="Estado" >
+              <span>{{this.datosCiudad[0].estado | capitalize}}</span>
+              <img :src="`http://openweathermap.org/img/wn/${ this.datosCiudad[0].icon }.png`" alt="Estado" >
             </b-card-text>
           </b-card-body>
         </b-col>
           <b-col md="5">
-            <h1 class="display-1 mt-3">{{ hoy.temp | tempEntero }}º</h1>
+            <h1 class="display-1 mt-3">{{ this.datosCiudad[0].temp | tempEntero }}º</h1>
         </b-col>
       </b-row>
     </b-card>
@@ -27,7 +27,6 @@ export default {
     data () {
       return {
         fecha: null,
-        hoy: this.datosCiudad[0]
       }
     },
     props: {
