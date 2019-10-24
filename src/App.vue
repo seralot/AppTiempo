@@ -1,6 +1,6 @@
 <template>
-  <div id="app" class="col-md-6 col-lg-5 col-xl-4 mx-auto">
-    <cabecera></cabecera>
+  <div id="app" class="container">
+    <cabecera class="col-6 mx-auto"></cabecera>
     <router-view></router-view>
   </div>
 </template>
