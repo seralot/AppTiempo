@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="container">
-    <cabecera class="col-6 mx-auto"></cabecera>
+    <cabecera class="col-md-6 col-12 mx-auto"></cabecera>
     <router-view></router-view>
   </div>
 </template>
