@@ -43,9 +43,6 @@ export default {
       slide: 0
     };
   },
-  mounted () {
-    // this.init();
-  },
   methods:{
     isFirstElement () {
       if(this.slide==0){
@@ -60,28 +57,13 @@ export default {
       }else{
         return true
       }
-    }
-    // init() {
-    //   let prev=document.getElementsByClassName("carousel-control-prev-icon")[0];
-    //   prev.style.display = 'none';
-    //   let next=document.getElementsByClassName("carousel-control-next-icon")[0];
-    //   next.addEventListener("click", this.next);
-    //   prev.addEventListener("click", this.prev);
-    // },
+    },
+    init() {
+      this.slide=0;
+    },
   },
   props: {
     datosCiudad: Array
-  },
-  // Computed properties
-  computed: {
-    /*hora: function(){
-        if(this.ciudad.fecha){
-          let fecha = new Date(this.ciudad.fecha*1000);
-          return fecha.getHours()+":"+fecha.getMinutes();
-        }else{
-          return "";
-        }
-      }*/
   },
   // Filtro para poner en mayusculas un string
   filters: {
@@ -95,11 +77,11 @@ export default {
       return value.slice(0, 10);
     }
   },
-  // watch: {
-  //   datosCiudad: function(){
-  //     this.init();
-  //   }
-  // }
+  watch: {
+    datosCiudad: function(){
+      this.init();
+    }
+  }
 };
 </script>
 
