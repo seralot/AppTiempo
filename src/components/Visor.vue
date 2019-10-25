@@ -1,53 +1,36 @@
 <template>
   <div v-if="datosCiudad" class="col-md-6 col-12 mx-md-auto mx-auto">
-    <!-- <b-card  no-body class="overflow-hidden" border-variant="secondary">
-      <b-row no-gutters>
-         <b-col md="1" class="d-none d-md-flex- d-lg-flex align-items-center"><button class="carousel-control-prev-icon bg-dark"></button></b-col>
-        <b-col md="6">
-          <b-card-body :title="`${this.datosCiudad[0].nombre}`" :sub-title="this.datosCiudad[0].fecha | fecha">
-            <b-card-text>
-              <span>{{this.datosCiudad[0].estado | capitalize}}</span>
-              <img :src="`http://openweathermap.org/img/wn/${ this.datosCiudad[0].icon }.png`" alt="Estado" >
-            </b-card-text>
-          </b-card-body>
-        </b-col>
-          <b-col md="4">
-            <h1 class="display-1 mt-3">{{ this.datosCiudad[0].temp | tempEntero }}º</h1>
-        </b-col>
-        <b-col md="1" class="d-none d-md-flex d-lg-flex align-items-center pl-lg-4 pl-md-2"><button class="carousel-control-next-icon bg-dark"></button></b-col>
-      </b-row>
-    </b-card>-->
     <div>
       <b-carousel
         id="carousel-1"
         v-model="slide"
-        controls
+        :controls="true"
         background="#FFFFFF"
         class="carousel"
+        :interval=0
+        :class="{ 'hide-prev': isFirstElement(), 'hide-next': isLastElement() }"
       >
         <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-        <b-carousel-slide >
-          <div class="row col-md-12 col-12 text-dark">
+        <b-carousel-slide v-for="(data, indice) in datosCiudad" :key="indice">
+          <div  class="row col-md-12 col-12 text-dark">
             <div class="col-12 col-md-6">
-              <h1>{{ this.datosCiudad[0].nombre }}</h1>
-              <h6>{{ this.datosCiudad[0].fecha | fecha }}</h6>
-              <span>{{this.datosCiudad[0].estado | capitalize}}</span>
+              <h1>{{ data.nombre }}</h1>
+              <h6>{{ data.fecha | fecha }}</h6>
+              <span>{{data.estado | capitalize}}</span>
               <img
-                :src="`http://openweathermap.org/img/wn/${ this.datosCiudad[0].icon }.png`"
+                :src="`http://openweathermap.org/img/wn/${ data.icon }.png`"
                 alt="Estado"
               />
             </div>
             <div class="col-12 col-md-6">
-              <h1 class="display-1 mt-3">{{ this.datosCiudad[0].temp | tempEntero }}º</h1>
+              <h1 class="display-1 mt-3">{{ data.temp | tempEntero }}º</h1>
             </div>
           </div>
-
-          <!-- sub-title="this.datosCiudad[0].fecha | fecha" -->
         </b-carousel-slide>
       </b-carousel>
     </div>
   </div>
-  <div v-else>
+  <div v-else class="col-md-6 col-12 mx-md-auto mx-auto">
     <p class="bg-danger text-white font-weight-bold rounded">No se encontró la ubicación</p>
   </div>
 </template>
@@ -56,8 +39,35 @@
 export default {
   data() {
     return {
-      fecha: null
+      fecha: null,
+      slide: 0
     };
+  },
+  mounted () {
+    // this.init();
+  },
+  methods:{
+    isFirstElement () {
+      if(this.slide==0){
+        return true
+      }else{
+        return false
+      }
+    },
+    isLastElement () {
+      if(this.slide!=2){
+        return false
+      }else{
+        return true
+      }
+    }
+    // init() {
+    //   let prev=document.getElementsByClassName("carousel-control-prev-icon")[0];
+    //   prev.style.display = 'none';
+    //   let next=document.getElementsByClassName("carousel-control-next-icon")[0];
+    //   next.addEventListener("click", this.next);
+    //   prev.addEventListener("click", this.prev);
+    // },
   },
   props: {
     datosCiudad: Array
@@ -84,7 +94,12 @@ export default {
     fecha: function(value) {
       return value.slice(0, 10);
     }
-  }
+  },
+  // watch: {
+  //   datosCiudad: function(){
+  //     this.init();
+  //   }
+  // }
 };
 </script>
 
@@ -97,6 +112,12 @@ export default {
 }
 .carousel-control-prev-icon {
   background-image: url("../assets/izquierda.png");
+}
+.hide-prev .carousel-control-prev {
+  display:none;
+}
+.hide-next .carousel-control-next {
+  display:none;
 }
 
 @media screen and (max-width: 750px) {

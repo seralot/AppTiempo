@@ -1,5 +1,5 @@
 <template>
-  <div id="sobremi" class="mt-2 text-justify">
+  <div id="sobremi" class="mt-2 col-md-6 col-12 mx-auto text-justify">
     <p>La información meteorológica elaborada a partir de la actividad científica
       y técnica desenvolvida por la Conserjería de Medio Ambiente, Territorio y Vivienda,
       Tiempo, acorde con el prograso científico y tecnológico es objeto de propiedades intelectuales

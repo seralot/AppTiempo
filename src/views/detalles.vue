@@ -2,7 +2,7 @@
   <div id="details" class="text-center">
     <buscador @change="cargaDatos"></buscador>
     <div v-if="iniciado" >
-      <visor :datosCiudad="datosActuales"></visor>
+      <visor :datosCiudad="dias"></visor>
       <button class="mt-2 btn btn-lg btn-outline-dark" @click="ocultar()">Mostrar más</button>
       <tabla v-show="oculto" :datosCiudad="datosActuales"></tabla>
     </div>
@@ -15,17 +15,29 @@
       return {
         oculto: false,
         datosActuales: null,
-        iniciado: false
+        dias: [],
+        iniciado: false,
+        loaded: false,
       }
     },
     methods: {
-      cargaDatos (detallesBuscador) {
+      cargaDatos (detallesBuscador) {        
         this.iniciado = true
         this.datosActuales = detallesBuscador
+        this.borrarArray(this.dias);
+        this.infoVisor();
       },
       ocultar (){
         this.oculto = !this.oculto;
+      },
+      infoVisor (){
+        this.dias.push(this.datosActuales[0], this.datosActuales[8], this.datosActuales[16]);
+      },
+      borrarArray(array){
+      if(array.length!=0){
+        array.splice(0, array.length);
       }
+    },
     }
 }
 </script>
