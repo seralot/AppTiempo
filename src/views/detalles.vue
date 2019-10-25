@@ -3,8 +3,10 @@
     <buscador @change="cargaDatos"></buscador>
     <div v-if="iniciado" >
       <visor :datosCiudad="dias"></visor>
-      <button v-if="this.dias.length>0" class="mt-2 btn btn-lg btn-outline-dark boton" @click="ocultar()">Mostrar más</button>
-      <tabla v-show="oculto" :datosCiudad="datosActuales"></tabla>
+      <div v-if="this.dias.length>0" >
+        <button class="mt-2 btn btn-lg btn-outline-dark boton" @click="ocultar()">Mostrar más</button>
+        <tabla v-show="oculto" :datosCiudad="datosActuales"></tabla>
+      </div>
     </div>
   </div>
 </template>
