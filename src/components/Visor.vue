@@ -1,5 +1,5 @@
 <template>
-  <div v-if="datosCiudad" class="col-md-6 col-12 mx-md-auto mx-auto">
+  <div v-if="datosCiudad!=0" class="col-md-6 col-12 mx-md-auto mx-auto">
     <div>
       <b-carousel
         id="carousel-1"
@@ -37,6 +37,9 @@
 
 <script>
 export default {
+   props: {
+    datosCiudad: Array
+  },
   data() {
     return {
       fecha: null,
@@ -62,9 +65,7 @@ export default {
       this.slide=0;
     },
   },
-  props: {
-    datosCiudad: Array
-  },
+ 
   // Filtro para poner en mayusculas un string
   filters: {
     capitalize: function(value) {
