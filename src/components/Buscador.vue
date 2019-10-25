@@ -36,12 +36,6 @@ export default {
     throttledMethod: _.debounce(function() {
       this.changeUrl();
     }, 1000),
-  
-    borrarArray(array){
-      if(array.length!=0){
-        array.splice(0, array.length);
-      }
-    },
     search: function(ubicacion) {
       this.buscando = true
       axios
@@ -70,7 +64,7 @@ export default {
         if (this.detalles!=0) {
           this.$emit('change', this.detalles)
           // borramos el array detalles una vez pasamos los datos
-          this.borrarArray(this.detalles)
+          this.detalles=[]
         } else {
           this.$emit('change', null)
         }
