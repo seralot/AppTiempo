@@ -36,19 +36,7 @@ export default {
     throttledMethod: _.debounce(function() {
       this.changeUrl();
     }, 1000),
-    crearObjeto(nombre, temp, estado, icon, fecha, hora) {
-      const ciudad = {
-         nombre: nombre,
-         temp: temp,
-         estado: estado,
-         icon: icon,
-         fecha: fecha,
-         hora: hora,
-      };
-
-      this.detalles.push(ciudad);
-      console.log(">>>>>", ciudad)
-    },
+  
     borrarArray(array){
       if(array.length!=0){
         array.splice(0, array.length);
@@ -75,30 +63,14 @@ export default {
             fecha: item.dt_txt
           }
         });
-
-        // console.log(data);
-
-        // const data = {
-        //   nombre: this.ciudades.city.name,
-        //   temp: this.ciudades.list[0].main.temp,
-        //   estado: this.ciudades.list[0].weather[0].description,
-        //   icon: this.ciudades.list[0].weather[0].icon,
-        //   fecha: this.ciudades.list[0].dt_txt
-        // }
-        console.log("dfsdfsd")
-
-        // this.detalles.push(data)
-        console.log(this.detalles)
       }).catch(()=> {
-       this.ciudadEncontrada = {
-         nombre: null,
-         temp: null,
-         estado: null,
-         icon: null}
+
      }).finally(() => {
         this.buscando = false
-        if (this.detalles.length!=0) {
+        if (this.detalles!=0) {
           this.$emit('change', this.detalles)
+          // borramos el array detalles una vez pasamos los datos
+          this.borrarArray(this.detalles)
         } else {
           this.$emit('change', null)
         }

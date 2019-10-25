@@ -25,7 +25,11 @@
         this.iniciado = true
         this.datosActuales = detallesBuscador
         this.borrarArray(this.dias);
-        this.infoVisor();
+        if(detallesBuscador){
+          this.infoVisor();
+        }else{
+          this.dias = [];
+        }
       },
       ocultar (){
         this.oculto = !this.oculto;
