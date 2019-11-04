@@ -1,5 +1,5 @@
 <template>
-  <div v-if="datosCiudad!=0" class="col-md-6 col-12 mx-md-auto mx-auto">
+  <div v-if="datosCiudad!=0" class="col-md-9 col-12 mx-md-auto mx-auto my-auto">
     <div>
       <b-carousel
         id="carousel-1"
@@ -30,7 +30,7 @@
       </b-carousel>
     </div>
   </div>
-  <div v-else class="col-md-6 col-12 mx-md-auto mx-auto">
+  <div v-else class="col-md-8 col-12 mx-md-auto mx-auto">
     <p class="bg-danger text-white font-weight-bold rounded">No se encontró la ubicación</p>
   </div>
 </template>
@@ -38,21 +38,37 @@
 <script>
 export default {
    props: {
-    datosCiudad: Array
+    datosCiudad: Array,
+    fecha: String
   },
   data() {
     return {
-      fecha: null,
+      dia: null,
       slide: 0
     };
   },
-  methods:{
-    isFirstElement () {
-      if(this.slide==0){
-        return true
-      }else{
-        return false
+
+  beforeMount (){
+    if(this.fecha){
+      this.dia = this.fecha;
+      let slides = {
+        'hoy': 0,
+        'mañana': 1,
+        'pasado': 2,
       }
+      if (slides[this.dia]) {
+        this.slide = slides[this.dia]
+      }
+    }
+  },
+  methods:{
+    setDate(){
+      let days = ['hoy', 'mañana', 'pasado']
+      this.dia = days[this.slide]
+      this.$emit("update:fecha", this.dia)
+    },
+    isFirstElement () {
+      return this.slide==0
     },
     isLastElement () {
       if(this.slide!=2){
@@ -65,7 +81,6 @@ export default {
       this.slide=0;
     },
   },
- 
   // Filtro para poner en mayusculas un string
   filters: {
     capitalize: function(value) {
@@ -81,7 +96,11 @@ export default {
   watch: {
     datosCiudad: function(){
       this.init();
+    },
+    slide: function(){
+      this.setDate();
     }
+
   }
 };
 </script>

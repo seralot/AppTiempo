@@ -1,13 +1,4 @@
 <template>
-  <!--<div>
-  <b-nav>
-    <b-nav-item active left>El tiempo</b-nav-item>
-    <div class="row">
-        <b-nav-item right>Inicio |</b-nav-item>
-        <b-nav-item right>Sobre mi</b-nav-item>
-    </div>
-  </b-nav>
-  </div>-->
   <div>
     <b-navbar>
       <b-navbar-brand :to="{name: 'detalles'}">
