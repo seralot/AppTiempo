@@ -1,8 +1,8 @@
 <template>
-  <b-form @submit.stop.prevent="search(this.param)">
+  <b-form @submit.stop.prevent="search(param)">
     <b-form-group class="col-md-8 col-12 mx-auto" id="input-group-1" label="Ubicación: " label-for="input-1">
       <div class="d-flex justify-content-center">
-        <b-form-input @input="throttledMethod()" @keyup.enter="search(this.param)" v-model="param"  id="input-1" required placeholder="Ubicación"></b-form-input>
+        <b-form-input @input="throttledMethod()" @keyup.enter="search(param)" v-model="param"  id="input-1" required placeholder="Ubicación"></b-form-input>
       </div>
     </b-form-group>
     <p v-if="buscando">Buscando...</p>
