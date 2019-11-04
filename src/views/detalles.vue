@@ -1,12 +1,10 @@
 <template>
   <div id="details" class="text-center">
-    <buscador @change="cargaDatos"></buscador>
+    <buscador @change="cargaDatos" :ubicacion.sync="query.ubicacion"></buscador>
     <div v-if="iniciado" >
-      <visor :datosCiudad="dias"></visor>
-      <div v-if="this.dias.length>0" >
-        <button class="mt-2 btn btn-lg btn-outline-dark boton" @click="ocultar()">Mostrar más</button>
-        <tabla v-show="oculto" :datosCiudad="datosActuales"></tabla>
-      </div>
+      <visor :datosCiudad="dias" :fecha.sync="query.fecha"></visor>
+      <button v-if="this.dias.length>0" class="mt-2 btn btn-lg btn-outline-dark boton" @click="ocultar()">Mostrar más</button>
+      <tabla v-show="oculto" :datosCiudad="datosActuales"></tabla>
     </div>
   </div>
 </template>
@@ -21,16 +19,21 @@ export default {
       dias: [],
       iniciado: false,
       loaded: false,
+      query: {
+        ubicacion: null,
+        fecha: null,
+      }
     }
   },
-  mounted (){
-    if(this.$route.query.ubicacion){
-      this.search(this.$route.query.ubicacion);
-    }
-    this.throttledMethod();
+  beforeMount (){
+    this.query.ubicacion = this.$route.query.ubicacion
+    this.query.fecha = this.$route.query.fecha
   },
   methods: {
-    cargaDatos (detallesBuscador) {        
+    changeUrl(){
+      this.$router.push({ name: 'detalles', query: this.query }).catch(err => { });
+    },
+    cargaDatos (detallesBuscador) {
       this.iniciado = true
       this.datosActuales = detallesBuscador
       this.dias=[]
@@ -55,6 +58,12 @@ export default {
   watch: {
     dias: function(){
       this.ocultarBtn();
+    },
+    query: {
+      handler() {
+        this.changeUrl();
+      },
+      deep: true
     }
   }
 };
