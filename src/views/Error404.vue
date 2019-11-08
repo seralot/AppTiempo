@@ -1,16 +1,13 @@
 <template>
   <div class="mt-2">
-    <img src="@/assets/error.gif" alt="">
+    <img src="@/assets/error.gif" alt="" />
   </div>
 </template>
 
-
 <script>
 export default {
-  name: "error"
-};
+  name: "error",
+}
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

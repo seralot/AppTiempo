@@ -1,9 +1,15 @@
 <template>
   <div id="details" class="text-center">
     <buscador @change="cargaDatos" :ubicacion.sync="query.ubicacion"></buscador>
-    <div v-if="iniciado" >
+    <div v-if="iniciado">
       <visor :datosCiudad="dias" :fecha.sync="query.fecha"></visor>
-      <button v-if="this.dias.length>0" class="mt-2 btn btn-lg btn-outline-dark boton" @click="ocultar()">Mostrar más</button>
+      <button
+        v-if="this.dias.length > 0"
+        class="mt-2 btn btn-lg btn-outline-dark boton"
+        @click="ocultar()"
+      >
+        Mostrar más
+      </button>
       <tabla v-show="oculto" :datosCiudad="datosActuales"></tabla>
     </div>
   </div>
@@ -11,7 +17,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       oculto: false,
       btn: false,
@@ -22,57 +28,60 @@ export default {
       query: {
         ubicacion: null,
         fecha: null,
-      }
+      },
     }
   },
-  beforeMount (){
+  beforeMount() {
     this.query.ubicacion = this.$route.query.ubicacion
     this.query.fecha = this.$route.query.fecha
   },
   methods: {
-    changeUrl(){
-      this.$router.push({ name: 'detalles', query: this.query }).catch(err => { });
+    changeUrl() {
+      this.$router.push({ name: "detalles", query: this.query }).catch(err => {})
     },
-    cargaDatos (detallesBuscador) {
+    cargaDatos(detallesBuscador) {
       this.iniciado = true
       this.datosActuales = detallesBuscador
-      this.dias=[]
-      if(detallesBuscador){
-        this.infoVisor();
-      }else{
-        this.dias = [];
+      this.dias = []
+      if (detallesBuscador) {
+        this.infoVisor()
+      } else {
+        this.dias = []
       }
     },
-    ocultar (){
-      this.oculto = !this.oculto;
+    ocultar() {
+      this.oculto = !this.oculto
     },
-    ocultarBtn (){
-      if(this.dias!=0){
-        this.btn = !this.btn;
+    ocultarBtn() {
+      if (this.dias != 0) {
+        this.btn = !this.btn
       }
     },
-    infoVisor (){
-      this.dias.push(this.datosActuales[0], this.datosActuales[8], this.datosActuales[16]);
-    }
+    infoVisor() {
+      this.dias.push(
+        this.datosActuales[0],
+        this.datosActuales[8],
+        this.datosActuales[16]
+      )
+    },
   },
   watch: {
-    dias: function(){
-      this.ocultarBtn();
+    dias: function() {
+      this.ocultarBtn()
     },
     query: {
       handler() {
-        this.changeUrl();
+        this.changeUrl()
       },
-      deep: true
-    }
-  }
-};
+      deep: true,
+    },
+  },
+}
 </script>
 
 <style lang="scss">
 $tamaño-icono: 4em;
-.icono{
+.icono {
   width: $tamaño-icono;
 }
-
 </style>
