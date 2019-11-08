@@ -1,7 +1,7 @@
 <template>
-    <div id="details" class="text-center">
+  <div id="details" class="text-center">
     <buscador @change="cargaDatos"></buscador>
-    <div v-if="iniciado" >
+    <div v-if="iniciado">
       <tabla :datosCiudad="datosActuales"></tabla>
     </div>
   </div>
@@ -9,21 +9,19 @@
 
 <script>
 export default {
-    data () {
-      return {
-        datosActuales: null,
-        iniciado: false
-      }
-    },
-    methods: {
-      cargaDatos (detallesBuscador) {
-        this.iniciado = true
-        this.datosActuales = detallesBuscador
-      }
+  data() {
+    return {
+      datosActuales: null,
+      iniciado: false,
     }
+  },
+  methods: {
+    cargaDatos(detallesBuscador) {
+      this.iniciado = true
+      this.datosActuales = detallesBuscador
+    },
+  },
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
