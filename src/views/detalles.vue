@@ -1,8 +1,12 @@
 <template>
   <div id="details" class="text-center">
-    <buscador @change="cargaDatos" :ubicacion.sync="query.ubicacion"></buscador>
+    <buscador
+      @change="cargaDatos"
+      :ubicacion.sync="query.ubicacion"
+      :fecha.sync="query.fecha"
+    ></buscador>
     <div v-if="iniciado">
-      <visor :datosCiudad="dias" :fecha.sync="query.fecha"></visor>
+      <visor :datosCiudad="datosActuales" :fecha.sync="query.fecha"></visor>
       <button
         v-if="this.dias.length > 0"
         class="mt-2 btn btn-lg btn-outline-dark boton"
@@ -58,11 +62,7 @@ export default {
       }
     },
     infoVisor() {
-      this.dias.push(
-        this.datosActuales[0],
-        this.datosActuales[8],
-        this.datosActuales[16]
-      )
+      this.dias.push(this.datosActuales)
     },
   },
   watch: {

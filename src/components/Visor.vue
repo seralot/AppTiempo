@@ -1,5 +1,5 @@
 <template>
-  <div v-if="datosCiudad != 0" class="col-md-9 col-12 mx-md-auto mx-auto my-auto">
+  <div v-if="datosCiudad.length > 0" class="col-md-9 col-12 mx-md-auto mx-auto my-auto">
     <div>
       <b-carousel
         id="carousel-1"
@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import moment from "moment"
+
 export default {
   props: {
     datosCiudad: Array,
@@ -47,27 +49,31 @@ export default {
     return {
       dia: null,
       slide: 0,
+      days: ["hoy", "mañana", "pasado"],
     }
   },
+  computed: {
+    calendar() {
+      let today = moment() // Hoy
+      let tomorrow = moment().add(1, "day") // Mañana
+      let nexttomorrow = moment().add(2, "day") // Pasado Mañana
 
+      return {
+        hoy: today.format("YYYY-MM-DD"),
+        mañana: tomorrow.format("YYYY-MM-DD"),
+        pasado: nexttomorrow.format("YYYY-MM-DD"),
+      }
+    },
+  },
   beforeMount() {
     if (this.fecha) {
-      this.dia = this.fecha
-      let slides = {
-        hoy: 0,
-        mañana: 1,
-        pasado: 2,
-      }
-      if (slides[this.dia]) {
-        this.slide = slides[this.dia]
-      }
+      this.positionslide()
     }
   },
   methods: {
     setDate() {
-      let days = ["hoy", "mañana", "pasado"]
-      this.dia = days[this.slide]
-      this.$emit("update:fecha", this.dia)
+      this.dia = this.days[this.slide]
+      this.$emit("update:fecha", this.calendar[this.dia])
     },
     isFirstElement() {
       return this.slide == 0
@@ -79,8 +85,19 @@ export default {
         return true
       }
     },
-    init() {
-      this.slide = 0
+    positionslide() {
+      let today = moment().format("YYYY-MM-DD") // Hoy
+      let tomorrow = moment()
+        .add(1, "day")
+        .format("YYYY-MM-DD") // Mañana
+
+      if (this.fecha == today) {
+        this.slide = 0
+      } else if (this.fecha == tomorrow) {
+        this.slide = 1
+      } else {
+        this.slide = 2
+      }
     },
   },
   // Filtro para poner en mayusculas un string
@@ -96,9 +113,6 @@ export default {
     },
   },
   watch: {
-    datosCiudad: function() {
-      this.init()
-    },
     slide: function() {
       this.setDate()
     },
