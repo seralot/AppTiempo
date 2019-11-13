@@ -27,7 +27,10 @@ import axios from "axios"
 import _ from "lodash"
 export default {
   name: "buscador",
-  props: ["ubicacion"],
+  props: {
+    ubicacion: String,
+    fecha: String,
+  },
   data() {
     return {
       param: null,
@@ -69,21 +72,21 @@ export default {
     search: function(ubicacion) {
       this.buscando = true
       axios
-        .get(URL + "?city=" + ubicacion)
+        .get(URL + "?city=" + ubicacion + "&day=" + this.fecha)
         .then(response => {
           this.ciudades = response.data
           console.log(response)
-          this.detalles = this.ciudades.list.map(item => {
+          this.detalles = this.ciudades.map(item => {
             return {
-              nombre: this.ciudades.city.name,
-              temp: item.main.temp,
-              temp_max: item.main.temp_max,
-              temp_min: item.main.temp_min,
-              humedad: item.main.humidity,
-              viento: item.wind.speed,
-              estado: item.weather[0].description,
-              icon: item.weather[0].icon,
-              fecha: item.dt_txt,
+              nombre: this.ciudades[0].city,
+              temp: item.temp_max,
+              temp_max: item.temp_max,
+              temp_min: item.temp_min,
+              humedad: item.humidity,
+              viento: item.wind,
+              estado: item.description,
+              icon: item.icon,
+              fecha: item.datetime,
             }
           })
         })
@@ -98,6 +101,11 @@ export default {
             this.$emit("change", null)
           }
         })
+    },
+  },
+  watch: {
+    fecha: function() {
+      this.search(this.ubicacion)
     },
   },
 }
